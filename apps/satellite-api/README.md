@@ -10,7 +10,11 @@ Create `apps/satellite-api/.env.local`:
 N2YO_API_KEY=your_n2yo_api_key
 ```
 
-The workshop may provide a shared N2YO key. Treat it as a replaceable workshop credential: keep it in `.env.local`, never put it in client code, and rotate it after the event.
+The workshop may provide a shared N2YO key. It is a public, known-exposed
+workshop credential—not a secret or a production credential. Distribute its
+value separately, keep it in `.env.local` so it cannot be mistaken for an
+application default, apply provider-side limits, and rotate or revoke it after
+the event.
 
 ```bash
 pnpm install

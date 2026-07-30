@@ -3,7 +3,10 @@
 
 <p align="center">
   <a href="https://mpp.dev">
-    <img alt="MPP logo" src="https://mpp.dev/favicon.svg" width="96">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://mpp.dev/lockup-light.svg">
+      <img alt="Machine Payments Protocol" src="https://mpp.dev/lockup-dark.svg" width="360">
+    </picture>
   </a>
 </p>
 

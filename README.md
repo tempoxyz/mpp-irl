@@ -1,66 +1,36 @@
-# mpp-irl
+# MPP IRL
 
-We've prepared two apps to showcase what you can build with Machine Payments Protocol (MPP):
-- Pay-per-call API: monetize an API without managing API keys. To demonstrate, we'll monetize the [n2yo API](https://www.n2yo.com/api/) for satellite positions.
-- Pay-walled content: charge a fee for premium content. In this case the newest [MPP blog post](https://mpp.dev/blog/mppx-agent-runtimes)!
+Three small services for learning how to sell content, data, and local model inference with [Machine Payments Protocol](https://mpp.dev).
 
+| Project | Port | Starting point |
+| --- | ---: | --- |
+| [`content-gate`](apps/content-gate) | 3001 | An open Markdown document |
+| [`satellite-api`](apps/satellite-api) | 3002 | An open satellite-position API |
+| [`local-llm`](apps/local-llm) | 3003 | An OpenAI-compatible local SmolLM2 server |
 
-These apps are currently open, your job will be to payment-gate them with MPP!
+Each project starts without MPP. Pick one, confirm its open endpoint works, then follow its README to add a payment gate.
 
 ## Setup
 
+Requirements:
+
+- Node.js 22 or newer
+- pnpm 10
+- The project-specific prerequisite listed in the app README
+
 ```bash
-# Setup
 pnpm install
-# Run
 pnpm dev
-# Test - get content
-curl http://localhost:3001/api/content
-# Test - call the API (needs an API key)
-curl "http://localhost:3002/api/positions?id=25544&lat=41.702&lng=-76.014&alt=0&seconds=10"
 ```
 
+See [`apps/README.md`](apps/README.md) to choose a project.
 
-## Path 1: Add payment-per-call to the API with MPP
+## Workshop target
 
-1. Create `apps/satellite-api/.env.local` with your [n2yo API key](https://www.n2yo.com/api/):
+The goal is one paid request:
 
-```
-N2YO_API_KEY=your_api_key_here
-```
-
-2. Paste this into your coding agent to payment-gate each API call:
-
-```bash
-Use https://mpp.dev/guides/one-time-payments.md as reference. Add mppx to my satellite-api app to payment-gate the positions endpoint and charge $0.01 per request using the Tempo payment method with PathUSD. When payment is verified, execute the endpoint.
+```text
+request -> 402 challenge -> payment credential -> response + receipt
 ```
 
-
-
-## Path 2: Paywall the blog post with MPP
-
-Paste this into your coding agent to payment-gate the blog post:
-
-```bash
-Use https://mpp.dev/guides/one-time-payments.md as reference. Add mppx to my content-gate app to payment-gate the content endpoint and charge $0.01 per request using the Tempo payment method with PathUSD. When payment is verified, return the blog post content at https://mpp.dev/blog/mppx-agent-runtimes.md
-```
-
-
-## Test your work
-
-Once you've added mppx, test with:
-
-```bash
-# Test
-curl http://localhost:3001/api/content
-curl "http://localhost:3002/api/positions?id=25544&lat=41.702&lng=-76.014&alt=0&seconds=10" | jq
-
-# Create a Tempo testnet wallet (one-time)
-npx mppx account create
-npx mppx account view
-npx mppx account fund
-
-# Make paid requests
-npx mppx "http://localhost:3001/api/content" --network testnet
-npx mppx "http://localhost:3002/api/positions?id=25544&lat=41.702&lng=-76.014&alt=0&seconds=10" --network testnet | jq
-```
+Use `pnpm dlx mppx@0.8.15` for the documented commands so every attendee runs the same CLI version.

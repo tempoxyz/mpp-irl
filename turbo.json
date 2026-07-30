@@ -8,6 +8,9 @@
     },
     "build": {
       "outputs": [".next/**", "dist/**"]
+    },
+    "test": {
+      "outputs": []
     }
   }
 }

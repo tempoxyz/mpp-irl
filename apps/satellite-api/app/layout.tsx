@@ -1,6 +1,6 @@
 export const metadata = {
   title: 'Satellite Positions API',
-  description: 'Paid satellite tracking API powered by mppx + n2yo',
+  description: 'Workshop starter for a paid satellite tracking API',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

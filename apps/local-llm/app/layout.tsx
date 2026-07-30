@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Content Gate Demo',
-  description: 'Workshop starter for paid content with MPP',
+  title: 'Local LLM API',
+  description: 'OpenAI-compatible local inference workshop starter',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

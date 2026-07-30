@@ -1,0 +1,23 @@
+{
+  "name": "local-llm",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack --port 3003",
+    "build": "next build",
+    "chat": "node scripts/chat.mjs",
+    "responses": "node scripts/responses.mjs",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "next": "^15",
+    "openai": "^6",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "typescript": "^5",
+    "vitest": "^3"
+  }
+}

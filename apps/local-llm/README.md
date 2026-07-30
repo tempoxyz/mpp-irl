@@ -1,10 +1,12 @@
 # Local LLM
 
-An OpenAI-compatible proxy for SmolLM2 running entirely on your laptop. Turn it into a paid inference API using reusable MPP sessions.
+A terminal-only Hono server that exposes local SmolLM2 inference through the
+OpenAI API shape. Add reusable MPP sessions to sell each completion.
 
 ## Setup
 
-Install [Ollama](https://ollama.com/download), then download the 88 MB quantized model:
+Install [Ollama](https://ollama.com/download), then download the 88 MB
+quantized model:
 
 ```bash
 ollama pull smollm2:135m-instruct-q2_K
@@ -15,16 +17,22 @@ Inspect and run it directly:
 ```bash
 ollama list
 ollama show smollm2:135m-instruct-q2_K
-ollama run smollm2:135m-instruct-q2_K "Explain machine payments in one sentence."
+ollama run smollm2:135m-instruct-q2_K \
+  "Explain machine payments in one sentence."
 ```
 
-Ollama must be running at `http://127.0.0.1:11434`. The desktop app starts it automatically; a CLI-only installation can use:
+This Q2 model is intentionally tiny and fast; expect limited factual accuracy.
+The exercise is about serving and monetizing local inference, not model
+quality.
+
+Ollama must be running at `http://127.0.0.1:11434`. The desktop app starts it
+automatically; a CLI-only installation can use:
 
 ```bash
 ollama serve
 ```
 
-Start the OpenAI-compatible proxy:
+In another terminal, start the Hono proxy:
 
 ```bash
 pnpm install
@@ -40,7 +48,7 @@ pnpm --filter local-llm chat -- "Why are payment sessions useful?"
 pnpm --filter local-llm responses -- "Describe this model in one sentence."
 ```
 
-Or point any OpenAI client at:
+Any OpenAI client can use the same configuration:
 
 ```text
 baseURL: http://localhost:3003/v1
@@ -48,52 +56,71 @@ apiKey: local
 model: smollm2:135m-instruct-q2_K
 ```
 
-The proxy supports:
+The server supports:
 
 - `POST /v1/chat/completions`, including streaming
 - `POST /v1/responses`, including streaming
 - `GET /v1/models`
+
+There is no web interface. Use the README and terminals throughout the
+exercise.
 
 ## Add MPP
 
 Paste this into your coding agent:
 
 ```text
-Use https://mpp.dev/guides/pay-as-you-go.md as reference.
-In apps/local-llm, protect POST /v1/chat/completions and POST /v1/responses
-with current tempo.session payments. Charge 0.001 pathUSD per completion on
-Tempo Moderato testnet (chain ID 42431). Keep the upstream OpenAI request,
-response, and streaming formats unchanged. Use Store.memory() for this local
-workshop and load the server signing account named seller with resolveAccount
-from mppx/cli. Leave GET /v1/models open. Add an mppx-aware fetch to the
-existing OpenAI client example so only its baseURL and transport differ.
-Do not use legacy sessions.
+Read https://tempo.xyz/developers/docs/guide/machine-payments/pay-as-you-go
+and https://mpp.dev/advanced/discovery.
+
+In apps/local-llm, add mppx and viem. Protect POST /v1/chat/completions and
+POST /v1/responses with mppx.session middleware from mppx/hono. Charge 0.001
+pathUSD per completion using current Tempo session protocol v2 on Moderato
+testnet, chain ID 42431. Keep GET /v1/models free. Preserve the existing
+OpenAI request, response, error, and streaming formats.
+
+Load the local seller account named "seller" with resolveAccount from mppx/cli.
+Use Store.memory() only because this is a single-process workshop server. Add
+discovery(app, mppx, { auto: true, ... }) after the paid routes so mppx serves
+/openapi.json automatically; do not hand-author an OpenAPI route. Do not use
+legacy sessions.
 ```
 
 Manual path:
 
-1. Add `mppx` and `viem`.
-2. Create a funded local seller with `mppx account create --account seller --network testnet`.
-3. Register `tempo.session` with chain ID `42431`, pathUSD, and `Store.memory()`.
-4. Wrap both completion handlers with `mppx.session({ amount: "0.001", unitType: "completion" })`.
-5. Pass the mppx-aware `fetch` to the OpenAI JavaScript client.
+1. Install `mppx@0.8.15` and `viem`.
+2. Create a funded `seller` account on Tempo testnet.
+3. Create an `Mppx` instance using `tempo.session`, pathUSD, chain ID `42431`,
+   and `Store.memory()`.
+4. Add `mppx.session({ amount: "0.001", unitType: "completion" })` before both
+   Hono completion handlers.
+5. Call `discovery(app, mppx, { auto: true, info: { ... } })` after registering
+   the routes. This mounts `/openapi.json` from the actual middleware
+   configuration.
 
 ## Test after MPP
 
-Create the seller before starting the server:
+Create the server account before starting the modified server:
 
 ```bash
-pnpm dlx mppx@0.8.15 account create --account seller --network testnet
+pnpm dlx mppx@0.8.15 account create \
+  --account seller \
+  --network testnet
 ```
 
 Create and fund a separate buyer:
 
 ```bash
-pnpm dlx mppx@0.8.15 account create --account buyer --network testnet
-pnpm dlx mppx@0.8.15 account fund --account buyer --network testnet
+pnpm dlx mppx@0.8.15 account create \
+  --account buyer \
+  --network testnet
+
+pnpm dlx mppx@0.8.15 account fund \
+  --account buyer \
+  --network testnet
 ```
 
-Inspect the challenge:
+Inspect the unpaid challenge:
 
 ```bash
 curl -i http://localhost:3003/v1/chat/completions \
@@ -105,15 +132,43 @@ curl -i http://localhost:3003/v1/chat/completions \
   }'
 ```
 
-Make two paid requests to reuse the same session:
+Expected: `402 Payment Required` with a Tempo session challenge for `0.001`
+pathUSD.
+
+Pay and retry with the mppx CLI:
 
 ```bash
-pnpm --filter local-llm chat -- "What is MPP?"
-pnpm --filter local-llm chat -- "Why use payment sessions?"
-pnpm dlx mppx@0.8.15 sessions list --account buyer --network testnet
+pnpm dlx mppx@0.8.15 http://localhost:3003/v1/chat/completions \
+  --account buyer \
+  --network testnet \
+  --json-body '{
+    "model": "smollm2:135m-instruct-q2_K",
+    "messages": [{"role": "user", "content": "Say hello."}],
+    "stream": false
+  }' \
+  -vv
 ```
 
-Expected: raw `curl` returns `402`; both OpenAI-client calls stream normally; the session list shows one reusable channel.
+Run that command twice, then inspect the reusable channel:
+
+```bash
+pnpm dlx mppx@0.8.15 sessions list \
+  --account buyer \
+  --network testnet
+```
+
+Expected: both paid requests return OpenAI-compatible JSON and receipts; the
+session list shows one channel with increasing cumulative spend.
+
+When finished:
+
+```bash
+pnpm dlx mppx@0.8.15 sessions close \
+  --all \
+  --yes \
+  --account buyer \
+  --network testnet
+```
 
 ## Extend it
 

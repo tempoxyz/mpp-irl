@@ -6,11 +6,9 @@
     "build": "next build"
   },
   "dependencies": {
-    "mppx": "latest",
     "next": "^15",
     "react": "^19",
-    "react-dom": "^19",
-    "viem": "^2"
+    "react-dom": "^19"
   },
   "devDependencies": {
     "@types/node": "^22",

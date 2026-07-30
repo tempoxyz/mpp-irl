@@ -1,6 +1,6 @@
 export const metadata = {
   title: 'Content Gate Demo',
-  description: 'Pay-per-view content gating with mppx',
+  description: 'Workshop starter for paid content with MPP',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

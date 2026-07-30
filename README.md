@@ -1,43 +1,65 @@
-# mpp-irl
+<br>
+<br>
 
-Turborepo with two mppx one-time payment demos.
+<p align="center">
+  <a href="https://mpp.dev">
+    <img alt="MPP logo" src="https://mpp.dev/favicon.svg" width="96">
+  </a>
+</p>
 
-| App | Port | Description |
-|-----|------|-------------|
-| `content-gate` | 3001 | Gates HTML content behind a $0.01 payment |
-| `satellite-api` | 3002 | Proxies n2yo satellite positions API behind a $0.01 payment |
+<br>
+<br>
 
-## Setup
+# MPP IRL
+
+Build your first paid HTTP service on [Tempo](https://tempo.xyz) with the
+[Machine Payments Protocol](https://mpp.dev).
+
+Each workshop project begins as a small, unpaid service. Pick one, confirm it
+works locally, then add an MPP payment gate and make one paid request.
+
+## Quick start
+
+Requires Node.js 22 or newer, pnpm 10, and any prerequisite listed by the
+project.
 
 ```bash
 pnpm install
-```
-
-Create a testnet mppx account:
-
-```bash
-npx mppx account create
-npx mppx account view
-```
-
-Set `RECIPIENT_ADDRESS` in each app's `.env.local` (use the address from `account view`).
-
-For the satellite API, also add your [n2yo API key](https://www.n2yo.com/api/):
-
-```
-RECIPIENT_ADDRESS=0xYourAddressHere
-N2YO_API_KEY=your_api_key_here
-```
-
-## Run
-
-```bash
 pnpm dev
 ```
 
-## Test
+## Projects
+
+| Project | Port | Starting point |
+| --- | ---: | --- |
+| [`content-gate`](apps/content-gate) | 3001 | A Markdown article |
+| [`starlink-tracker-api`](apps/starlink-tracker-api) | 3002 | Nearby Starlink satellites from N2YO |
+| [`local-llm`](apps/local-llm) | 3003 | An OpenAI-compatible local SmolLM2 server |
+
+See [`apps/README.md`](apps/README.md) for prerequisites, payment shape, and
+extension ideas.
+
+## Workshop goal
+
+Complete the MPP request flow:
+
+```text
+request -> 402 challenge -> payment credential -> response + receipt
+```
+
+Use `pnpm dlx mppx@0.8.15` for the documented commands so every attendee runs
+the same CLI version.
+
+## Development
 
 ```bash
-npx mppx "http://localhost:3001/api/content" --network testnet -iv
-npx mppx "http://localhost:3002/api/positions?id=25544&lat=41.702&lng=-76.014&alt=0&seconds=10" --network testnet -iv
+pnpm dev
+pnpm test
+pnpm build
 ```
+
+## Learn more
+
+- [Machine payments on Tempo](https://tempo.xyz/developers/docs/guide/machine-payments)
+- [MPP documentation](https://mpp.dev)
+- [Tempo documentation](https://tempo.xyz/developers)

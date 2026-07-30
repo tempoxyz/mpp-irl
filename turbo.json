@@ -1,6 +1,5 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": ["N2YO_API_KEY", "MPP_SECRET_KEY", "RECIPIENT_ADDRESS"],
   "tasks": {
     "dev": {
       "cache": false,
@@ -8,6 +7,9 @@
     },
     "build": {
       "outputs": [".next/**", "dist/**"]
+    },
+    "test": {
+      "outputs": []
     }
   }
 }

@@ -52,12 +52,14 @@ The N2YO key used for the live check remains only in the ignored
 ```text
 passed: 47
 failed: 0
-warnings: 0
+warnings: 2
 skipped: 0
 ```
 
 Checks included challenge structure, malformed authorization, real testnet
-payment, payment receipt, on-chain receipt, and nonempty response bodies.
+payment, payment receipt, on-chain receipt, and nonempty response bodies. The
+two discovery warnings note that automatic Hono discovery cannot infer the
+OpenAI request-body schemas; payment offers and runtime validation both pass.
 
 ## Automated checks
 

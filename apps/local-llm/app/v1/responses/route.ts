@@ -1,5 +1,6 @@
 import { proxyOpenAiRequest } from '@/lib/openai-proxy'
+import { paidCompletion } from '@/lib/payment'
 
-export function POST(request: Request) {
-  return proxyOpenAiRequest(request, 'responses')
-}
+export const POST = paidCompletion((request) =>
+  proxyOpenAiRequest(request, 'responses'),
+)

@@ -1,4 +1,4 @@
-const DEFAULT_OLLAMA_BASE_URL = 'http://127.0.0.1:11434'
+import { OLLAMA_BASE_URL } from './constants.js'
 
 type ProxyOptions = {
   baseUrl?: string
@@ -22,9 +22,12 @@ export async function proxyOpenAiRequest(
   endpoint: string,
   options: ProxyOptions = {},
 ) {
-  const baseUrl = options.baseUrl ?? process.env.OLLAMA_BASE_URL ?? DEFAULT_OLLAMA_BASE_URL
+  const baseUrl = options.baseUrl ?? OLLAMA_BASE_URL
   const fetchImpl = options.fetchImpl ?? fetch
-  const upstreamUrl = new URL(endpoint.replace(/^\/+/, ''), `${baseUrl.replace(/\/+$/, '')}/v1/`)
+  const upstreamUrl = new URL(
+    endpoint.replace(/^\/+/, ''),
+    `${baseUrl.replace(/\/+$/, '')}/v1/`,
+  )
 
   const headers = new Headers()
   for (const name of ['accept', 'content-type']) {
@@ -44,7 +47,8 @@ export async function proxyOpenAiRequest(
       signal: request.signal,
     })
   } catch (error) {
-    const detail = error instanceof Error ? error.message : 'unknown connection error'
+    const detail =
+      error instanceof Error ? error.message : 'unknown connection error'
     return errorResponse(`Could not reach Ollama at ${baseUrl}: ${detail}`, 502)
   }
 

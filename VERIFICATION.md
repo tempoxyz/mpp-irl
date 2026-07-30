@@ -7,6 +7,8 @@ Verified locally on July 30, 2026. Credentials and payment secrets are omitted.
 - Node.js `24.13.0`
 - pnpm `10.33.0`
 - Ollama `0.32.5`
+- Hono `4.12.32`
+- `@hono/node-server` `2.0.12`
 - Model `smollm2:135m-instruct-q2_K`
   - ID `888e2e49aff1`
   - Download size `88 MB`
@@ -32,10 +34,15 @@ The N2YO key used for the live check remains only in the ignored
 - An unsigned Chat Completions request returned `402`.
 - The challenge specified Tempo session protocol v2 on Moderato chain `42431`.
 - Currency was pathUSD and the price was `0.001` per completion.
+- Native Hono discovery generated `/openapi.json` from the registered payment
+  middleware and advertised both paid completion routes.
+- `GET /` returned `404`; there is no workshop web interface.
 - The official OpenAI JavaScript client completed two streamed Chat Completions
   requests and one Responses request through the mppx transport.
 - All three client calls reused one payment channel. Cumulative spend advanced
   from `1000` to `2000` to `3000` base units.
+- After the Hono refactor, the OpenAI client completed another streamed paid
+  request, recorded `1000` cumulative base units, and closed its channel.
 - The client closed its channel and received a testnet transaction hash.
 - The mppx CLI completed the same `402 -> payment -> 200 + receipt` flow, reused
   its channel for a second request, and closed all remaining buyer sessions.

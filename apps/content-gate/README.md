@@ -1,6 +1,7 @@
 # Content gate
 
-An open endpoint that returns an MPP blog post as Markdown. Turn it into a one-time paid content download.
+An open endpoint that returns a blog post as Markdown. Turn it into a one-time
+paid content download.
 
 ## Setup
 

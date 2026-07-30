@@ -5,8 +5,12 @@
   <a href="https://tempo.xyz">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/tempoxyz/tempo/main/.github/assets/tempo-wordmark-white.svg">
-      <img alt="Tempo wordmark" src="https://raw.githubusercontent.com/tempoxyz/tempo/main/.github/assets/tempo-wordmark-black.svg" width="360">
+      <img alt="Tempo wordmark" src="https://raw.githubusercontent.com/tempoxyz/tempo/main/.github/assets/tempo-wordmark-black.svg" width="320">
     </picture>
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://mpp.dev">
+    <img alt="MPP logo" src="https://mpp.dev/favicon.svg" width="72">
   </a>
 </p>
 

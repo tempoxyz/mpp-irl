@@ -6,8 +6,8 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "chat": "node scripts/chat.mjs",
-    "responses": "node scripts/responses.mjs",
+    "chat": "tsx src/scripts/chat.ts",
+    "responses": "tsx src/scripts/responses.ts",
     "test": "vitest run"
   },
   "dependencies": {

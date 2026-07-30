@@ -1,9 +1,10 @@
 {
-  "name": "satellite-api",
+  "name": "starlink-tracker-api",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack --port 3002",
-    "build": "next build"
+    "build": "next build",
+    "test": "vitest run"
   },
   "dependencies": {
     "next": "^15",
@@ -13,6 +14,7 @@
   "devDependencies": {
     "@types/node": "^22",
     "@types/react": "^19",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3"
   }
 }

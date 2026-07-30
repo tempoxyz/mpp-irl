@@ -36,7 +36,7 @@ pnpm dev
 | Project | Port | Starting point |
 | --- | ---: | --- |
 | [`content-gate`](apps/content-gate) | 3001 | A Markdown article |
-| [`satellite-api`](apps/satellite-api) | 3002 | An N2YO satellite-position API |
+| [`starlink-tracker-api`](apps/starlink-tracker-api) | 3002 | Nearby Starlink satellites from N2YO |
 | [`local-llm`](apps/local-llm) | 3003 | An OpenAI-compatible local SmolLM2 server |
 
 See [`apps/README.md`](apps/README.md) for prerequisites, payment shape, and

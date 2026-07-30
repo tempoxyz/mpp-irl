@@ -5,7 +5,7 @@ Every directory is a standalone workshop project. Run commands from the reposito
 | Project | Choose it when | External prerequisite |
 | --- | --- | --- |
 | [`content-gate`](content-gate) | You want the shortest path to a paid request | None |
-| [`satellite-api`](satellite-api) | You want to monetize third-party data | N2YO API key |
+| [`starlink-tracker-api`](starlink-tracker-api) | You want to monetize live Starlink data | Public workshop N2YO key |
 | [`local-llm`](local-llm) | You want streaming, sessions, and local inference | Ollama and an 88 MB model |
 
 ## Shared MPP flow

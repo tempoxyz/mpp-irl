@@ -1,6 +1,5 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": ["N2YO_API_KEY"],
   "tasks": {
     "dev": {
       "cache": false,

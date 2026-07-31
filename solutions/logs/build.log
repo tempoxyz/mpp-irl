@@ -1,0 +1,21 @@
+2026-07-31T11:51:33-07:00
+$ RECIPIENT_ADDRESS=<seller-address> \
+    pnpm --filter './solutions/**' build
+
+local-llm-solution: tsc completed successfully.
+content-gate-solution: Next.js 15.5.22 compiled successfully.
+  /              static
+  /api/content   dynamic
+starlink-tracker-api-solution: Next.js 15.5.22 compiled successfully.
+  /              static
+  /api/starlink  dynamic
+
+Exit status: 0
+
+Earlier build findings fixed during implementation:
+- Next.js rejects non-route exports from app route modules; handlers and
+  payment configuration moved into lib/.
+- mppx's Next.js server bundle imports its MCP peer; the solution apps now
+  declare @modelcontextprotocol/sdk.
+- mppx rejects secrets shorter than 32 bytes; the solutions now provide a
+  checked-in, 39-byte public workshop fallback.

@@ -6,12 +6,12 @@ buyers.
 
 ## Setup
 
-Open `apps/starlink-tracker-api/lib/constants.ts` and replace
-`replace-with-public-workshop-key` with the event’s N2YO key.
+The public workshop N2YO key is included in `lib/constants.ts`. It is
+known-exposed and safe to include in this exercise, but it is not a production
+credential. Apply provider-side limits and rotate or revoke it after the event.
 
-The workshop key is public and known-exposed. It is safe to include in this
-exercise, but it is not a production credential. Apply provider-side limits
-and rotate or revoke it after the event.
+`.env.example` also includes a public workshop `MPP_SECRET_KEY`; copy it to
+`.env.local` when implementing the payment gate. Replace it for deployment.
 
 ```bash
 pnpm install

@@ -15,16 +15,6 @@ export async function GET(request: Request) {
     )
   }
 
-  if (N2YO_API_KEY === 'replace-with-public-workshop-key') {
-    return Response.json(
-      {
-        error:
-          'Set the public workshop N2YO key in lib/constants.ts before running.',
-      },
-      { status: 503 },
-    )
-  }
-
   const url = buildStarlinkUrl(observer)
   const response = await fetch(url, { cache: 'no-store' })
   const text = await response.text()

@@ -1,7 +1,7 @@
 # Content gate
 
-An open endpoint that returns a blog post as Markdown. Turn it into a one-time
-paid content download.
+An open endpoint that returns the Claude Opus 4.5 Soul document as Markdown.
+Turn it into a one-time paid content download.
 
 ## Setup
 
@@ -19,7 +19,8 @@ pnpm --filter content-gate dev
 curl -i http://localhost:3001/api/content
 ```
 
-Expected: `200 OK`, a `text/markdown` content type, and the article body.
+Expected: `200 OK`, a `text/markdown` content type, and the Claude Opus 4.5 Soul
+document.
 
 ## Add MPP
 
@@ -61,6 +62,6 @@ Expected: the first request returns `402`; `mppx` pays and returns the original 
 
 ## Extend it
 
-- Serve a local document instead of a URL.
+- Serve another local document.
 - Add different prices for text, image, and PDF formats.
 - Return a short free preview before the paid download.

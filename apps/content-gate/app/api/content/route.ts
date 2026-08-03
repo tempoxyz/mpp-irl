@@ -1,16 +1,16 @@
-const BLOG_URL = 'https://mpp.dev/blog/mppx-agent-runtimes.md'
+import { readFile } from 'node:fs/promises'
+import { join } from 'node:path'
+
+const OPUS_4_5_SOUL_DOCUMENT_PATH = join(
+  process.cwd(),
+  'content',
+  'claude-opus-4.5-soul.md',
+)
+
+export const dynamic = 'force-static'
 
 export async function GET() {
-  const res = await fetch(BLOG_URL)
-
-  if (!res.ok) {
-    return Response.json(
-      { error: 'Failed to fetch blog content', status: res.status },
-      { status: 502 },
-    )
-  }
-
-  const markdown = await res.text()
+  const markdown = await readFile(OPUS_4_5_SOUL_DOCUMENT_PATH, 'utf8')
 
   return new Response(markdown, {
     headers: { 'Content-Type': 'text/markdown; charset=utf-8' },

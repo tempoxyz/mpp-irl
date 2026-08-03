@@ -22,6 +22,7 @@ One-time payment projects use a recipient address and `tempo.charge`. The local 
 
 ## Extension prompts
 
-- Content: replace the Markdown URL with a PDF, image, dataset, or private file.
+- Content: replace the local Markdown document with a PDF, image, dataset, or
+  private file.
 - Data: replace N2YO with flight, market, scientific, or proprietary data.
 - Model: add another local model, price models differently, or build a model router.

@@ -35,7 +35,7 @@ pnpm dev
 
 | Project | Port | Starting point |
 | --- | ---: | --- |
-| [`content-gate`](apps/content-gate) | 3001 | A Markdown article |
+| [`content-gate`](apps/content-gate) | 3001 | The Claude Soul document as Markdown |
 | [`starlink-tracker-api`](apps/starlink-tracker-api) | 3002 | Nearby Starlink satellites from N2YO |
 | [`local-llm`](apps/local-llm) | 3003 | An OpenAI-compatible local SmolLM2 server |
 

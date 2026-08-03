@@ -1,7 +1,7 @@
 # Content gate
 
-An open endpoint that returns the Claude Soul document as Markdown. Turn it into
-a one-time paid content download.
+An open endpoint that returns the Claude Opus 4.5 Soul document as Markdown.
+Turn it into a one-time paid content download.
 
 ## Setup
 
@@ -19,7 +19,8 @@ pnpm --filter content-gate dev
 curl -i http://localhost:3001/api/content
 ```
 
-Expected: `200 OK`, a `text/markdown` content type, and the Soul document.
+Expected: `200 OK`, a `text/markdown` content type, and the Claude Opus 4.5 Soul
+document.
 
 ## Add MPP
 

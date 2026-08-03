@@ -3,8 +3,8 @@ export default function Home() {
     <main style={{ maxWidth: 600, margin: '4rem auto', fontFamily: 'system-ui' }}>
       <h1>Content Gate Demo</h1>
       <p>
-        This app serves the Claude Soul document as premium Markdown. Your
-        hackathon goal: gate it behind a one-time mppx payment.
+        This app serves the Claude Opus 4.5 Soul document as premium Markdown.
+        Your hackathon goal: gate it behind a one-time mppx payment.
       </p>
       <h2>Try it</h2>
       <pre style={{ background: '#f4f4f4', padding: '1rem', borderRadius: 8 }}>

@@ -10,8 +10,9 @@ pnpm install
 pnpm --filter content-gate dev
 ```
 
-`.env.example` includes a public workshop `MPP_SECRET_KEY`; copy it to
-`.env.local` when implementing the payment gate. Replace it for deployment.
+`.env.example` includes a public workshop `MPP_SECRET_KEY` and Foundry/Anvil
+development recipient; copy it to `.env.local` when implementing the payment
+gate. Replace both for deployment.
 
 ## Try it before MPP
 

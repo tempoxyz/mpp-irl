@@ -10,8 +10,9 @@ The public workshop N2YO key is included in `lib/constants.ts`. It is
 known-exposed and safe to include in this exercise, but it is not a production
 credential. Apply provider-side limits and rotate or revoke it after the event.
 
-`.env.example` also includes a public workshop `MPP_SECRET_KEY`; copy it to
-`.env.local` when implementing the payment gate. Replace it for deployment.
+`.env.example` also includes a public workshop `MPP_SECRET_KEY` and
+Foundry/Anvil development recipient; copy it to `.env.local` when implementing
+the payment gate. Replace both for deployment.
 
 ```bash
 pnpm install

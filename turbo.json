@@ -3,7 +3,20 @@
   "tasks": {
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "passThroughEnv": [
+        "MPP_SECRET_KEY",
+        "MPPX_SELLER_ACCOUNT",
+        "N2YO_API_KEY",
+        "OLLAMA_BASE_URL",
+        "OLLAMA_MODEL",
+        "OPENAI_API_KEY",
+        "OPENAI_BASE_URL",
+        "PORT",
+        "RECIPIENT_ADDRESS",
+        "STARLINK_CACHE_TTL_MS",
+        "WORKSHOP_OFFLINE"
+      ]
     },
     "build": {
       "outputs": [".next/**", "dist/**"]

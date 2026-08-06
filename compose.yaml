@@ -1,0 +1,27 @@
+services:
+  workshop:
+    image: ${MPP_IRL_IMAGE:-ghcr.io/tempoxyz/mpp-irl:workshop}
+    build:
+      context: .
+    environment:
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    ports:
+      - "3001:3001"
+      - "3002:3002"
+      - "3003:3003"
+    volumes:
+      - .:/workspace
+      - pnpm-store:/pnpm/store
+      - root-node-modules:/workspace/node_modules
+      - content-gate-node-modules:/workspace/apps/content-gate/node_modules
+      - local-llm-node-modules:/workspace/apps/local-llm/node_modules
+      - starlink-node-modules:/workspace/apps/starlink-tracker-api/node_modules
+
+volumes:
+  pnpm-store:
+  root-node-modules:
+  content-gate-node-modules:
+  local-llm-node-modules:
+  starlink-node-modules:

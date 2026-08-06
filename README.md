@@ -23,15 +23,45 @@ works locally, then add an MPP payment gate and make one paid request.
 
 ## Quick start
 
-Requires Node.js 22 or newer, pnpm 10, and any prerequisite listed by the
-project.
+### Docker
+
+The workshop image includes Node, pnpm, and a preloaded dependency store. The
+Compose setup mounts this checkout so source and package changes remain
+editable on the host.
+
+Preflight the image before the workshop:
+
+```bash
+docker version
+docker compose version
+docker pull ghcr.io/tempoxyz/mpp-irl:workshop
+```
+
+Start all three projects:
+
+```bash
+docker compose up
+```
+
+Compose exposes ports 3001–3003 and keeps pnpm dependencies in named volumes.
+It routes `local-llm` to Ollama running on the host. If you choose that project,
+install its prerequisite before starting Compose:
+
+```bash
+ollama pull smollm2:135m-instruct-q2_K
+curl -fsS http://127.0.0.1:11434/api/tags
+```
+
+### Native
+
+Requires Node.js 22, pnpm 10, and any prerequisite listed by the project.
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-## Projects
+## Available projects
 
 | Project | Port | Starting point |
 | --- | ---: | --- |
@@ -88,6 +118,21 @@ pnpm dev
 pnpm test
 pnpm build
 ```
+
+Build the workshop image locally when changing its dependencies or startup
+behavior:
+
+```bash
+docker compose build
+docker compose up
+```
+
+The container workflow builds pull requests and publishes `linux/amd64` and
+`linux/arm64` images from `main` and `v*` tags. Published images receive an
+immutable `sha-*` tag; `main` also updates `workshop`.
+
+After the first workflow publish, a package administrator must make the GHCR
+package public so attendees can pull it without authenticating.
 
 ## Learn more
 

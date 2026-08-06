@@ -10,6 +10,12 @@ The public workshop N2YO key is included in `lib/constants.ts`. It is
 known-exposed and safe to include in this exercise, but it is not a production
 credential. Apply provider-side limits and rotate or revoke it after the event.
 
+Responses are cached in memory for one minute to reduce calls made through the
+shared key. If N2YO is unavailable or rate-limited, the server uses stale cache
+data when possible, then falls back to a small bundled fixture. Inspect the
+`X-Workshop-Data-Source` response header for `live`, `cache`, `stale-cache`, or
+`fixture`.
+
 `.env.example` also includes a public workshop `MPP_SECRET_KEY` and
 Foundry/Anvil development recipient; copy it to `.env.local` when implementing
 the payment gate. Replace both for deployment.
@@ -22,7 +28,7 @@ pnpm --filter starlink-tracker-api dev
 ## Try it before MPP
 
 ```bash
-curl -sS \
+curl -sS -D /dev/stderr \
   "http://localhost:3002/api/starlink?lat=41.702&lng=-76.014&alt=0&radius=90" \
   | jq
 ```
@@ -34,6 +40,10 @@ and location.
 N2YO’s `above` API searches objects over an observer and filters by category.
 This example uses category `52`, the documented Starlink category, and the
 maximum 90° radius to search the full sky above the local horizon.
+
+Set `WORKSHOP_OFFLINE=true` to always use the fixture. Override the cache
+duration with `STARLINK_CACHE_TTL_MS`; the fixture preserves the API shape but
+does not represent current satellite positions.
 
 ## Add MPP
 

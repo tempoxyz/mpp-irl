@@ -1,5 +1,5 @@
-import { N2YO_API_KEY } from '../../../lib/constants'
-import { buildStarlinkUrl, parseObserver } from '../../../lib/starlink'
+import { getStarlinkData } from '../../../lib/starlink-data'
+import { parseObserver } from '../../../lib/starlink'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -15,16 +15,11 @@ export async function GET(request: Request) {
     )
   }
 
-  const url = buildStarlinkUrl(observer)
-  const response = await fetch(url, { cache: 'no-store' })
-  const text = await response.text()
-
-  try {
-    return Response.json(JSON.parse(text), { status: response.status })
-  } catch {
-    return Response.json(
-      { error: 'Invalid response from N2YO', status: response.status },
-      { status: 502 },
-    )
-  }
+  const { data, source } = await getStarlinkData(observer)
+  return Response.json(data, {
+    headers: {
+      'Cache-Control': 'no-store',
+      'X-Workshop-Data-Source': source,
+    },
+  })
 }

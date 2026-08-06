@@ -35,6 +35,11 @@ ollama serve
 The repository's Docker Compose setup connects the containerized proxy to this
 host Ollama service automatically.
 
+If Ollama is unavailable, set `OLLAMA_BASE_URL` and `OLLAMA_MODEL` in
+`.env.local` to another OpenAI-compatible server and model. The proxy only
+requires compatible `/v1/models`, `/v1/chat/completions`, and `/v1/responses`
+endpoints.
+
 In another terminal, start the Hono proxy:
 
 ```bash
@@ -82,7 +87,7 @@ pathUSD per completion using current Tempo session protocol v2 on Moderato
 testnet, chain ID 42431. Keep GET /v1/models free. Preserve the existing
 OpenAI request, response, error, and streaming formats.
 
-Load the local seller account named "seller" with resolveAccount from mppx/cli.
+Load the local seller account named "local-llm-seller" with resolveAccount from mppx/cli.
 Use Store.memory() only because this is a single-process workshop server. Add
 discovery(app, mppx, { auto: true, ... }) after the paid routes so mppx serves
 /openapi.json automatically; do not hand-author an OpenAPI route. Do not use
@@ -92,7 +97,7 @@ legacy sessions.
 Manual path:
 
 1. Install `mppx@0.8.15` and `viem`.
-2. Create a funded `seller` account on Tempo testnet.
+2. Create a funded `local-llm-seller` account on Tempo testnet.
 3. Create an `Mppx` instance using `tempo.session`, pathUSD, chain ID `42431`,
    and `Store.memory()`.
 4. Add `mppx.session({ amount: "0.001", unitType: "completion" })` before both
@@ -107,7 +112,7 @@ Create the server account before starting the modified server:
 
 ```bash
 pnpm dlx mppx@0.8.15 account create \
-  --account seller \
+  --account local-llm-seller \
   --network testnet
 ```
 
@@ -162,6 +167,10 @@ pnpm dlx mppx@0.8.15 sessions list \
 
 Expected: both paid requests return OpenAI-compatible JSON and receipts; the
 session list shows one channel with increasing cumulative spend.
+
+`Store.memory()` keeps seller session state only for the lifetime of this
+process. Keep the server running until the buyer closes its channel; after a
+server restart, use a fresh buyer session.
 
 When finished:
 

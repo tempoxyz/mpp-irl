@@ -16,9 +16,17 @@ data when possible, then falls back to a small bundled fixture. Inspect the
 `X-Workshop-Data-Source` response header for `live`, `cache`, `stale-cache`, or
 `fixture`.
 
-`.env.example` also includes a public workshop `MPP_SECRET_KEY` and
-Foundry/Anvil development recipient; copy it to `.env.local` when implementing
-the payment gate. Replace both for deployment.
+`.env.example` also includes a public workshop `MPP_SECRET_KEY`; copy it to
+`.env.local` when implementing the payment gate. Set `RECIPIENT_ADDRESS` to a
+fresh Tempo account you control:
+
+```bash
+pnpm dlx mppx@0.8.15 account create \
+  --account starlink-recipient \
+  --network testnet
+```
+
+Replace the public workshop secret for deployment.
 
 ```bash
 pnpm install

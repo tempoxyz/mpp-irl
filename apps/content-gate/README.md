@@ -10,9 +10,18 @@ pnpm install
 pnpm --filter content-gate dev
 ```
 
-`.env.example` includes a public workshop `MPP_SECRET_KEY` and Foundry/Anvil
-development recipient; copy it to `.env.local` when implementing the payment
-gate. Replace both for deployment.
+`.env.example` includes a public workshop `MPP_SECRET_KEY`; copy it to
+`.env.local` when implementing the payment gate. Create a recipient account and
+put its address in `RECIPIENT_ADDRESS`:
+
+```bash
+pnpm dlx mppx@0.8.15 account create \
+  --account content-gate-recipient \
+  --network testnet
+```
+
+Use a recipient you control, and replace the public workshop secret for
+deployment.
 
 ## Try it before MPP
 
@@ -60,6 +69,11 @@ pnpm dlx mppx@0.8.15 http://localhost:3001/api/content \
 ```
 
 Expected: the first request returns `402`; `mppx` pays and returns the original Markdown with a payment receipt.
+
+If payment fails with `no matching transfer found`, inspect the transaction for
+a `ReceivePolicyGuard` log at `0xB10C000000000000000000000000000000000000`.
+That means the recipient's receive policy blocked delivery. Use a fresh
+recipient you control; do not treat a blocked transfer as a successful payment.
 
 ## Extend it
 

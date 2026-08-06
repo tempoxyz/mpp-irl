@@ -32,6 +32,9 @@ automatically; a CLI-only installation can use:
 ollama serve
 ```
 
+The repository's Docker Compose setup connects the containerized proxy to this
+host Ollama service automatically.
+
 In another terminal, start the Hono proxy:
 
 ```bash

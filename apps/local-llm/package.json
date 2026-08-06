@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch --env-file-if-exists=.env.local src/server.ts",
     "build": "tsc",
-    "start": "node dist/server.js",
+    "start": "node --env-file-if-exists=.env.local dist/server.js",
     "chat": "tsx src/scripts/chat.ts",
     "responses": "tsx src/scripts/responses.ts",
     "test": "vitest run"

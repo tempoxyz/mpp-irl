@@ -7,8 +7,6 @@ const OPUS_4_5_SOUL_DOCUMENT_PATH = join(
   'claude-opus-4.5-soul.md',
 )
 
-export const dynamic = 'force-static'
-
 export async function GET() {
   const markdown = await readFile(OPUS_4_5_SOUL_DOCUMENT_PATH, 'utf8')
 

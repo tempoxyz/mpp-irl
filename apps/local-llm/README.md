@@ -40,6 +40,11 @@ If Ollama is unavailable, set `OLLAMA_BASE_URL` and `OLLAMA_MODEL` in
 requires compatible `/v1/models`, `/v1/chat/completions`, and `/v1/responses`
 endpoints.
 
+`.env.example` also includes a public workshop `MPP_SECRET_KEY`; copy it to
+`.env.local` when implementing the payment gate. `Mppx.create` exits at
+startup without a secret key, even when only session methods are configured.
+Replace the public workshop secret for deployment.
+
 In another terminal, start the Hono proxy:
 
 ```bash
@@ -88,6 +93,8 @@ testnet, chain ID 42431. Keep GET /v1/models free. Preserve the existing
 OpenAI request, response, error, and streaming formats.
 
 Load the local seller account named "local-llm-seller" with resolveAccount from mppx/cli.
+Keep MPP_SECRET_KEY in apps/local-llm/.env.local; Mppx.create requires it
+even when only session methods are configured.
 Use Store.memory() only because this is a single-process workshop server. Add
 discovery(app, mppx, { auto: true, ... }) after the paid routes so mppx serves
 /openapi.json automatically; do not hand-author an OpenAPI route. Do not use

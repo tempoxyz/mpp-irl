@@ -23,7 +23,7 @@ describe('parseObserver', () => {
     [{ lat: '0', lng: '-181' }, 'longitude below range'],
     [{ lat: '0', lng: '0', radius: '91' }, 'radius above range'],
     [{ lat: 'north', lng: '0' }, 'nonnumeric latitude'],
-  ])('rejects %s (%s)', (parameters) => {
+  ])('rejects %s (%s)', (parameters, _description) => {
     expect(parseObserver(new URLSearchParams(parameters))).toBeNull()
   })
 })

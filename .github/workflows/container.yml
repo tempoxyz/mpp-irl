@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Secure runner
-        uses: tempoxyz/gh-actions/actions/secure-runner@27b9d9cb079918e6be16c8660f82bb0cf7fef6ea
+        uses: tempoxyz/gh-actions/actions/secure-runner@0a60d757d0f4725a34f22f7b9ebf7b91b4b00bcf
 
       - name: Check out repository
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -32,14 +32,14 @@ jobs:
           persist-credentials: false
 
       - name: Set up QEMU
-        uses: tempoxyz/gh-actions/vendor/docker/setup-qemu-action@b411ce7fe18d0775ae614ad5c4b873c768364979
+        uses: tempoxyz/gh-actions/vendor/docker/setup-qemu-action@0a60d757d0f4725a34f22f7b9ebf7b91b4b00bcf
 
       - name: Set up Docker Buildx
-        uses: tempoxyz/gh-actions/vendor/docker/setup-buildx-action@6f436eb3a168279692739e8c0c9fdb52b94bfae7
+        uses: tempoxyz/gh-actions/vendor/docker/setup-buildx-action@0a60d757d0f4725a34f22f7b9ebf7b91b4b00bcf
 
       - name: Log in to GHCR
         if: github.event_name != 'pull_request'
-        uses: tempoxyz/gh-actions/vendor/docker/login-action@6f436eb3a168279692739e8c0c9fdb52b94bfae7
+        uses: tempoxyz/gh-actions/vendor/docker/login-action@0a60d757d0f4725a34f22f7b9ebf7b91b4b00bcf
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -47,7 +47,7 @@ jobs:
 
       - name: Generate image metadata
         id: meta
-        uses: tempoxyz/gh-actions/vendor/docker/metadata-action@6f436eb3a168279692739e8c0c9fdb52b94bfae7
+        uses: tempoxyz/gh-actions/vendor/docker/metadata-action@0a60d757d0f4725a34f22f7b9ebf7b91b4b00bcf
         with:
           images: ${{ env.IMAGE_NAME }}
           tags: |
@@ -58,7 +58,7 @@ jobs:
 
       - name: Build and push image
         id: push
-        uses: tempoxyz/gh-actions/vendor/docker/build-push-action@6f436eb3a168279692739e8c0c9fdb52b94bfae7
+        uses: tempoxyz/gh-actions/vendor/docker/build-push-action@0a60d757d0f4725a34f22f7b9ebf7b91b4b00bcf
         with:
           context: .
           platforms: ${{ github.event_name == 'pull_request' && 'linux/amd64' || 'linux/amd64,linux/arm64' }}

@@ -1,4 +1,4 @@
-FROM node:22.17.1-bookworm-slim
+FROM node:22.23.4-bookworm-slim@sha256:5991875dfb80938dd8a6ba3fe3e96fd04929e70792762b3319d8caadbbe229bc
 
 LABEL org.opencontainers.image.source="https://github.com/tempoxyz/mpp-irl"
 LABEL org.opencontainers.image.description="Editable development environment for the MPP IRL workshop"

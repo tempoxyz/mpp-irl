@@ -23,6 +23,8 @@ minimumReleaseAgeExclude:
   - "@vitest/snapshot@4.1.12"
   - "@vitest/spy@4.1.12"
   - "@vitest/utils@4.1.12"
+  # mpp-agent's Tempo Wallet access-key flow was built and tested against accounts 0.21.0.
+  - "accounts@0.21.0"
 
 onlyBuiltDependencies:
   - esbuild

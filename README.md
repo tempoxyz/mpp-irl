@@ -68,9 +68,15 @@ pnpm dev
 | [`content-gate`](apps/content-gate) | 3001 | The Claude Opus 4.5 Soul document as Markdown |
 | [`starlink-tracker-api`](apps/starlink-tracker-api) | 3002 | Nearby Starlink satellites from N2YO |
 | [`local-llm`](apps/local-llm) | 3003 | An OpenAI-compatible local SmolLM2 server |
+| [`mpp-agent`](apps/mpp-agent) | 3000 | An AI agent whose only integration is a wallet that pays for tools over MPP |
 
 Each project README covers its prerequisites, payment shape, and extension
 ideas.
+
+`mpp-agent` is a buyer-side demo rather than a workshop starting point. It is
+not started by `pnpm dev` or Docker Compose, and each run spends real USDC.e
+from your Tempo Wallet, up to the limit you approve for it. Start it with
+`pnpm --filter mpp-agent start` after following its README.
 
 ## Recipient accounts
 

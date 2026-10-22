@@ -1,7 +1,7 @@
 packages:
   - "apps/*"
 
-minimumReleaseAge: 10080
+minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   # Next.js 16.4.1 fixes critical advisories; keep its matching runtime/compiler packages.
   - "next@16.4.1"

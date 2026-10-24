@@ -27,3 +27,9 @@ minimumReleaseAgeExclude:
 onlyBuiltDependencies:
   - esbuild
   - sharp
+
+# Keep transitive security fixes when refreshing the lockfile.
+overrides:
+  "body-parser@>=2.0.0 <2.4.0": "2.4.0"
+  "fast-uri@>=3.0.0 <3.1.9": "3.1.9"
+  "zod@>=4.0.0 <4.6.6": "4.6.7"
